@@ -17,17 +17,17 @@ package com.example.android.quakereport;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
     ListView earthquakeListView;
-    ArrayList<String> earthquakes;
+    ArrayList<Earthquake> earthquakes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +42,20 @@ public class EarthquakeActivity extends AppCompatActivity {
 
         earthquakes = new ArrayList<>();
 
-        earthquakes.add("San Francisco");
-        earthquakes.add("London");
-        earthquakes.add("Tokyo");
-        earthquakes.add("Mexico City");
-        earthquakes.add("Moscow");
-        earthquakes.add("Rio de Janeiro");
-        earthquakes.add("Paris");
+        earthquakes.add(new Earthquake(new GregorianCalendar(2016, 2, 2), "San Francisco", 557.2));
+        earthquakes.add(new Earthquake(new GregorianCalendar(2015, 6, 1), "London", 6.1));
+        earthquakes.add(new Earthquake(new GregorianCalendar(2015, 5, 4), "Tokyo", 5.3));
+        earthquakes.add(new Earthquake(new GregorianCalendar(2014, 3, 7), "Mexico City", 1.6));
+        earthquakes.add(new Earthquake(new GregorianCalendar(2013, 2, 8), "Moscow", 4.2));
+        earthquakes.add(new Earthquake(new GregorianCalendar(2012, 6, 9), "Rio de Janeiro", 3.0));
+        earthquakes.add(new Earthquake(new GregorianCalendar(2012, 7, 20), "Paris", 1.9));
     }
 
     private void setUpListView() {
 
         earthquakeListView = (ListView) findViewById(R.id.list);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, earthquakes);
+        EarthquakeAdapter adapter = new EarthquakeAdapter(this, earthquakes);
         earthquakeListView.setAdapter(adapter);
     }
 }
