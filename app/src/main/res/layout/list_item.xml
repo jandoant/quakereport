@@ -1,50 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                android:paddingBottom="@dimen/vertical_layout_margin"
-                android:paddingLeft="@dimen/horizontal_layout_margin"
-                android:paddingRight="@dimen/horizontal_layout_margin"
-                android:paddingTop="@dimen/vertical_layout_margin">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/vertical_layout_margin"
+              android:paddingLeft="@dimen/horizontal_layout_margin"
+              android:paddingRight="@dimen/horizontal_layout_margin"
+              android:paddingTop="@dimen/vertical_layout_margin"
+              android:weightSum="1">
 
     <TextView
         android:id="@+id/txt_magnitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_weight="1"
-        android:textAlignment="textEnd"
+        android:layout_weight="0.28"
+        android:gravity="end"
         android:textStyle="normal|bold"
         tools:text="7.2"/>
 
     <TextView
         android:id="@+id/txt_location"
-        android:layout_width="wrap_content"
+        android:layout_width="59dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="96dp"
-        android:layout_marginStart="96dp"
+        android:layout_marginLeft="72dp"
+
+
+        android:layout_weight="0.29"
         tools:text="San Franciso"/>
 
     <TextView
         android:id="@+id/txt_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_weight="1"
-        android:textAlignment="viewStart"
+
+        android:layout_weight="0.36"
+        android:gravity="end"
         tools:text="Feb 2, 2016"/>
 
-</RelativeLayout>
+</LinearLayout>

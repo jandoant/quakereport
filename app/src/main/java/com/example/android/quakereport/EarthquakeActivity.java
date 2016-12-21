@@ -20,7 +20,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
@@ -34,21 +33,13 @@ public class EarthquakeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
-        createData();
+        fetchDataFromJSON();
+        //createData();
         setUpListView();
     }
 
-    private void createData() {
-
-        earthquakes = new ArrayList<>();
-
-        earthquakes.add(new Earthquake(new GregorianCalendar(2016, 2, 2), "San Francisco", 557.2));
-        earthquakes.add(new Earthquake(new GregorianCalendar(2015, 6, 1), "London", 6.1));
-        earthquakes.add(new Earthquake(new GregorianCalendar(2015, 5, 4), "Tokyo", 5.3));
-        earthquakes.add(new Earthquake(new GregorianCalendar(2014, 3, 7), "Mexico City", 1.6));
-        earthquakes.add(new Earthquake(new GregorianCalendar(2013, 2, 8), "Moscow", 4.2));
-        earthquakes.add(new Earthquake(new GregorianCalendar(2012, 6, 9), "Rio de Janeiro", 3.0));
-        earthquakes.add(new Earthquake(new GregorianCalendar(2012, 7, 20), "Paris", 1.9));
+    private void fetchDataFromJSON() {
+        earthquakes = QueryUtils.extractEarthquakes();
     }
 
     private void setUpListView() {

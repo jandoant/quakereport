@@ -29,18 +29,17 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             listItem = inflater.inflate(R.layout.list_item, parent, false);
-
-            TextView txt_magnitude = (TextView) listItem.findViewById(R.id.txt_magnitude);
-            TextView txt_location = (TextView) listItem.findViewById(R.id.txt_location);
-            TextView txt_date = (TextView) listItem.findViewById(R.id.txt_date);
-
-            if (earthquake != null) {
-                txt_magnitude.setText(String.valueOf(earthquake.getMagnitude()));
-                txt_location.setText(earthquake.getLocation());
-                txt_date.setText(earthquake.getDate());
-            }
         }
 
+        TextView txt_magnitude = (TextView) listItem.findViewById(R.id.txt_magnitude);
+        TextView txt_location = (TextView) listItem.findViewById(R.id.txt_location);
+        TextView txt_date = (TextView) listItem.findViewById(R.id.txt_date);
+
+        if (earthquake != null) {
+            txt_magnitude.setText(String.valueOf(earthquake.getMagnitude()));
+            txt_location.setText(earthquake.getPlace());
+            txt_date.setText(String.valueOf(earthquake.getDate()));
+        }
         return listItem;
     }
 }
