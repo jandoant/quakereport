@@ -37,16 +37,19 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         TextView txt_city = (TextView) listItem.findViewById(R.id.txt_city);
         TextView txt_date = (TextView) listItem.findViewById(R.id.txt_date);
         TextView txt_time = (TextView) listItem.findViewById(R.id.txt_time);
+
         if (earthquake != null) {
+
             txt_magnitude.setText(String.valueOf(earthquake.getMagnitude()));
-
-            GradientDrawable magnitudeCircle = (GradientDrawable) txt_magnitude.getBackground();
-
             int magnitudeColor = getMagnitudeColor(earthquake.getMagnitudeAsDouble());
-
+            GradientDrawable magnitudeCircle = (GradientDrawable) txt_magnitude.getBackground();
             magnitudeCircle.setColor(magnitudeColor);
 
-            txt_distance.setText(earthquake.getDistance());
+            if (earthquake.getDistance() != "") {
+                txt_distance.setText(earthquake.getDistance());
+            } else {
+                txt_distance.setVisibility(View.GONE);
+            }
             txt_city.setText(earthquake.getCity());
             txt_date.setText(String.valueOf(earthquake.getDate()));
             txt_time.setText(earthquake.getTime());
@@ -57,9 +60,8 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     private int getMagnitudeColor(double magnitude) {
 
         int color = 0;
-        int magnitudeFloored = (int) Math.floor(magnitude);
 
-        switch (magnitudeFloored) {
+        switch ((int) magnitude) {
             case 0:
             case 1:
                 color = getContext().getResources().getColor(R.color.magnitude1);
@@ -88,7 +90,7 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
             case 9:
                 color = getContext().getResources().getColor(R.color.magnitude9);
                 break;
-            case 10:
+            default:
                 color = getContext().getResources().getColor(R.color.magnitude10plus);
                 break;
         }//Ende switch

@@ -15,13 +15,17 @@
  */
 package com.example.android.quakereport;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class EarthquakeActivity extends AppCompatActivity {
+public class EarthquakeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
     ListView earthquakeListView;
@@ -46,5 +50,25 @@ public class EarthquakeActivity extends AppCompatActivity {
         earthquakeListView = (ListView) findViewById(R.id.list);
         EarthquakeAdapter adapter = new EarthquakeAdapter(this, earthquakes);
         earthquakeListView.setAdapter(adapter);
+        earthquakeListView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        showEarthquakeDetail(earthquakes.get(position));
+    }
+
+    private void showEarthquakeDetail(Earthquake earthquake) {
+        String url = earthquake.getUrl();
+        openWebPage(url);
+    }
+
+    private void openWebPage(String url) {
+        Uri webpage = Uri.parse(url);
+        //Implicit Intent to open up web browser
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }

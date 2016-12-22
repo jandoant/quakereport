@@ -11,11 +11,13 @@ public class Earthquake {
     private double magnitude;
     private String place;
     private long time;
+    private String url;
 
-    public Earthquake(long time, String place, double magnitude) {
+    public Earthquake(long time, String place, double magnitude, String url) {
         this.time = time;
         this.place = place;
         this.magnitude = magnitude;
+        this.url = url;
     }
 
     public String getPlace() {
@@ -68,7 +70,7 @@ public class Earthquake {
                 dist += subString[i] + " ";
             }
         } else {
-            dist = "somewhere";
+            dist = "";
         }
 
         return dist;
@@ -80,11 +82,11 @@ public class Earthquake {
 
         if (!hasDistanceInfo()) { // keine Angabe der Entfernung -> nur City zeigen
             for (int i = 0; i < subString.length; i++) {
-                city += subString[i] + "";
+                city += subString[i] + " ";
             }
         } else {
             for (int i = 3; i < subString.length; i++) {
-                city += subString[i] + "";
+                city += subString[i] + " ";
             }
         }
         return city;
@@ -102,5 +104,13 @@ public class Earthquake {
     private boolean hasDistanceInfo() {
         String[] subString = place.split(" ");
         return subString.length > 3;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

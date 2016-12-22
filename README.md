@@ -23,3 +23,9 @@ from the U.S. Geological Survey (USGS) organization.
 ###v.0.04 - Polish UI
 * visual styling
 * magnitude circle has color of strength
+
+###v.0.05 - show EarthQuake Detail in Browser
+* implicit Intent to open web browser with specific URL
+* update Earthquake class to hold url field
+* fetch url field from JSON
+* fixed some UI Bugs from v.0.04
