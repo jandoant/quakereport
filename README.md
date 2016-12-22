@@ -19,3 +19,7 @@ from the U.S. Geological Survey (USGS) organization.
 ###v.0.03 Providing earthquake data via hardcoded JSON
 * new Query Utils class -> creates ArrayList of EarthQuakes
 * app shows data parsed from JSON String
+
+###v.0.04 - Polish UI
+* visual styling
+* magnitude circle has color of strength

@@ -1,45 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:paddingBottom="@dimen/vertical_layout_margin"
-              android:paddingLeft="@dimen/horizontal_layout_margin"
-              android:paddingRight="@dimen/horizontal_layout_margin"
-              android:paddingTop="@dimen/vertical_layout_margin"
-              android:weightSum="1">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:paddingLeft="@dimen/horizontal_layout_margin"
+                android:paddingRight="@dimen/horizontal_layout_margin">
 
     <TextView
         android:id="@+id/txt_magnitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_weight="0.28"
-        android:gravity="end"
-        android:textStyle="normal|bold"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/magnitude_circle"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:textColor="@color/color_list_background"
+        android:textSize="18sp"
         tools:text="7.2"/>
 
-    <TextView
-        android:id="@+id/txt_location"
-        android:layout_width="59dp"
+    <LinearLayout
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="72dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/horizontal_layout_margin"
+        android:layout_marginStart="@dimen/horizontal_layout_margin"
+        android:layout_toRightOf="@+id/txt_magnitude"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            tools:text="64 km N of"/>
+
+        <TextView
+            android:id="@+id/txt_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            tools:text="Taltal, Chile"/>
+    </LinearLayout>
 
 
-        android:layout_weight="0.29"
-        tools:text="San Franciso"/>
-
-    <TextView
-        android:id="@+id/txt_date"
+    <LinearLayout
+        android:id="@+id/layout_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
 
-        android:layout_weight="0.36"
-        android:gravity="end"
-        tools:text="Feb 2, 2016"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/txt_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="te"
+            android:textAlignment="viewEnd"
+            android:textSize="14sp"
+            tools:text="30.01.2016"/>
+
+        <TextView
+            android:id="@+id/txt_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="te"
+            android:textAlignment="viewEnd"
+            android:textSize="14sp"
+            tools:text="04:25"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

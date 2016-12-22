@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class EarthquakeActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
-
     ListView earthquakeListView;
     ArrayList<Earthquake> earthquakes;
 
@@ -45,7 +44,6 @@ public class EarthquakeActivity extends AppCompatActivity {
     private void setUpListView() {
 
         earthquakeListView = (ListView) findViewById(R.id.list);
-
         EarthquakeAdapter adapter = new EarthquakeAdapter(this, earthquakes);
         earthquakeListView.setAdapter(adapter);
     }
