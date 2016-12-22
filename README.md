@@ -29,3 +29,6 @@ from the U.S. Geological Survey (USGS) organization.
 * update Earthquake class to hold url field
 * fetch url field from JSON
 * fixed some UI Bugs from v.0.04
+
+### v1.01 AsyncTask implementation
+* fetch fake data in background via Async Task
