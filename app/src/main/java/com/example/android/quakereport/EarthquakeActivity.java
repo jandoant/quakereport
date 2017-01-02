@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -32,10 +33,11 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
     private static final int EARTHQUAKE_LOADER_ID = 1;
-    final String QUERY_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-12-31&minfelt=50&minmagnitude=7";
+    final String QUERY_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-12-31&minfelt=50&minmagnitude=3";
     ListView listView;
     TextView txt_emptyView;
     EarthquakeAdapter adapter;
+    ProgressBar loading_animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
     }
 
     private void initUI() {
+        loading_animation = (ProgressBar) findViewById(R.id.loading_animation);
         listView = (ListView) findViewById(R.id.list);
         txt_emptyView = (TextView) findViewById(R.id.empty);
 
@@ -95,6 +98,7 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
         //Update the UI with the result
         // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
+        loading_animation.setVisibility(View.GONE);
         if (result != null && !result.isEmpty()) {
             updateUI(result);
         } else {

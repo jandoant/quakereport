@@ -40,3 +40,6 @@ from the U.S. Geological Survey (USGS) organization.
 
 ###v1.04 handling empty state
 * show specific Text when EarthquakeQuery returns an empty List
+
+###v1.05 show loading animation
+
