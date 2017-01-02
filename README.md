@@ -32,3 +32,6 @@ from the U.S. Geological Survey (USGS) organization.
 
 ### v1.01 AsyncTask implementation
 * fetch fake data in background via Async Task
+
+###v1.02. HttpRequest via AsyncTask
+* fetch online data in background via AsyncTask and show it on screen

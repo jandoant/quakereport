@@ -19,7 +19,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -27,11 +29,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import hugo.weaving.DebugLog;
+
 public class EarthquakeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
-    private final String QUERY_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-05-02&minfelt=50&minmagnitude=5";
     ListView earthquakeListView;
+    SwipeRefreshLayout refreshLayout;
     private ArrayList<Earthquake> earthquakes;
 
     @Override
@@ -39,6 +43,19 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+        if (refreshLayout != null) {
+            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    reload();
+                }
+            });
+        }
+    }
+
+    private void reload() {
+        String QUERY_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-12-31&minfelt=50&minmagnitude=2";
         FetchDataTask fetchDataTask = new FetchDataTask();
         fetchDataTask.execute(QUERY_URL);
     }
@@ -66,7 +83,7 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        showEarthquakeDetail(earthquakes.get(position));
     }
 
     private void updateData(ArrayList<Earthquake> result) {
@@ -74,21 +91,28 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
     }
 
     private class FetchDataTask extends AsyncTask<String, Void, ArrayList<Earthquake>> {
-
+        @DebugLog
         @Override
         protected ArrayList<Earthquake> doInBackground(String... urlStrings) {
 
-            ArrayList<Earthquake> earthquakes = EarthQuakeUtils.fetchEarthquakeData(urlStrings[0]);
-            return earthquakes;
+            if (urlStrings.length == 0 || urlStrings[0] == "") {
+                Log.e(LOG_TAG, "Die URL des Queries ist nicht vorhanden oder leer");
+                return null;
+            } else {
+                ArrayList<Earthquake> result = EarthQuakeUtils.fetchEarthquakeData(urlStrings[0]);
+                return result;
+            }
+
         }
 
         @Override
         protected void onPostExecute(ArrayList<Earthquake> result) {
             if (result == null) {
-                Toast.makeText(getApplicationContext(), "Es gibt ein Problem mit der Verbindung", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Ein Problem ist aufgetreten", Toast.LENGTH_SHORT).show();
             } else {
                 updateData(result);
                 updateUI();
+                refreshLayout.setRefreshing(false);
             }
         }
     }
