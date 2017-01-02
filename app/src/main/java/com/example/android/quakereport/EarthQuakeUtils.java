@@ -78,7 +78,9 @@ public class EarthQuakeUtils {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
-            inputStream.close();
+            if (inputStream != null) {
+                inputStream.close();
+            }
         }
 
         return jsonResponse;

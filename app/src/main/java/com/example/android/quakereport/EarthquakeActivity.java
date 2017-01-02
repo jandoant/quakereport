@@ -16,8 +16,11 @@
 package com.example.android.quakereport;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +48,23 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.earthquake_activity);
 
         initUI();
+
+        if (hasInternetConnection()) {
+            reloadData();
+        } else {
+            txt_emptyView.setText("Sorry. Check your Internet Connection");
+        }
+    }
+
+    private boolean hasInternetConnection() {
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
+    private void reloadData() {
         //initialitze Loader
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);

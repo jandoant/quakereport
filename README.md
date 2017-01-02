@@ -43,3 +43,7 @@ from the U.S. Geological Survey (USGS) organization.
 
 ###v1.05 show loading animation
 
+###v1.06 handling missing internet connection
+
+
+
