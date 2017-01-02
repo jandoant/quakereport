@@ -13,18 +13,11 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
-<android.support.v4.widget.SwipeRefreshLayout
+<ListView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh_layout"
+    android:id="@+id/list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- Layout for a list of earthquakes -->
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:orientation="vertical"/>
-</android.support.v4.widget.SwipeRefreshLayout>
+    android:layout_height="match_parent"
+    android:divider="@null"
+    android:orientation="vertical"/>
 

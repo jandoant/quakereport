@@ -35,3 +35,5 @@ from the U.S. Geological Survey (USGS) organization.
 
 ###v1.02. HttpRequest via AsyncTask
 * fetch online data in background via AsyncTask and show it on screen
+
+###v1.03 using Loaders instead of AsyncTask

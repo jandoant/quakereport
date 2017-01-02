@@ -15,56 +15,48 @@
  */
 package com.example.android.quakereport;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import hugo.weaving.DebugLog;
-
-public class EarthquakeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class EarthquakeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, LoaderManager.LoaderCallbacks<ArrayList<Earthquake>> {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
-    ListView earthquakeListView;
-    SwipeRefreshLayout refreshLayout;
-    private ArrayList<Earthquake> earthquakes;
+    private static final int EARTHQUAKE_LOADER_ID = 1;
+    final String QUERY_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-12-31&minfelt=50&minmagnitude=7";
+    ListView listView;
+    EarthquakeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
-        if (refreshLayout != null) {
-            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    reload();
-                }
-            });
-        }
+        initUI();
+        //initialitze Loader
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
     }
 
-    private void reload() {
-        String QUERY_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-12-31&minfelt=50&minmagnitude=2";
-        FetchDataTask fetchDataTask = new FetchDataTask();
-        fetchDataTask.execute(QUERY_URL);
+    private void initUI() {
+        listView = (ListView) findViewById(R.id.list);
+        // Create a new adapter that takes an empty list of earthquakes as data-input
+        adapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
     }
 
-    private void updateUI() {
-        earthquakeListView = (ListView) findViewById(R.id.list);
-        EarthquakeAdapter adapter = new EarthquakeAdapter(this, earthquakes);
-        earthquakeListView.setAdapter(adapter);
-        earthquakeListView.setOnItemClickListener(this);
+    private void updateUI(ArrayList<Earthquake> data) {
+        adapter.clear();
+        adapter.addAll(data);
     }
 
     private void showEarthquakeDetail(Earthquake earthquake) {
@@ -83,37 +75,28 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        showEarthquakeDetail(earthquakes.get(position));
+        showEarthquakeDetail(adapter.getItem(position));
     }
 
-    private void updateData(ArrayList<Earthquake> result) {
-        this.earthquakes = result;
+    @Override
+    public Loader<ArrayList<Earthquake>> onCreateLoader(int id, Bundle args) {
+        //Create a new loader for the given URL
+        return new EarthquakeLoader(this, QUERY_URL);
     }
 
-    private class FetchDataTask extends AsyncTask<String, Void, ArrayList<Earthquake>> {
-        @DebugLog
-        @Override
-        protected ArrayList<Earthquake> doInBackground(String... urlStrings) {
-
-            if (urlStrings.length == 0 || urlStrings[0] == "") {
-                Log.e(LOG_TAG, "Die URL des Queries ist nicht vorhanden oder leer");
-                return null;
-            } else {
-                ArrayList<Earthquake> result = EarthQuakeUtils.fetchEarthquakeData(urlStrings[0]);
-                return result;
-            }
-
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Earthquake>> loader, ArrayList<Earthquake> result) {
+        //Update the UI with the result
+        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
+        // data set. This will trigger the ListView to update.
+        if (result != null && !result.isEmpty()) {
+            updateUI(result);
         }
+    }
 
-        @Override
-        protected void onPostExecute(ArrayList<Earthquake> result) {
-            if (result == null) {
-                Toast.makeText(getApplicationContext(), "Ein Problem ist aufgetreten", Toast.LENGTH_SHORT).show();
-            } else {
-                updateData(result);
-                updateUI();
-                refreshLayout.setRefreshing(false);
-            }
-        }
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Earthquake>> loader) {
+        //Loader reset, so we can clear out our existing data.
+        adapter.clear();
     }
 }
