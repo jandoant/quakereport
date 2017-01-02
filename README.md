@@ -37,3 +37,6 @@ from the U.S. Geological Survey (USGS) organization.
 * fetch online data in background via AsyncTask and show it on screen
 
 ###v1.03 using Loaders instead of AsyncTask
+
+###v1.04 handling empty state
+* show specific Text when EarthquakeQuery returns an empty List

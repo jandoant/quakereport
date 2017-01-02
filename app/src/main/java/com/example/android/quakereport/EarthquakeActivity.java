@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
     private static final int EARTHQUAKE_LOADER_ID = 1;
     final String QUERY_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-12-31&minfelt=50&minmagnitude=7";
     ListView listView;
+    TextView txt_emptyView;
     EarthquakeAdapter adapter;
 
     @Override
@@ -48,10 +50,14 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
 
     private void initUI() {
         listView = (ListView) findViewById(R.id.list);
+        txt_emptyView = (TextView) findViewById(R.id.empty);
+
         // Create a new adapter that takes an empty list of earthquakes as data-input
         adapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
+
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+        listView.setEmptyView(txt_emptyView);
     }
 
     private void updateUI(ArrayList<Earthquake> data) {
@@ -91,6 +97,8 @@ public class EarthquakeActivity extends AppCompatActivity implements AdapterView
         // data set. This will trigger the ListView to update.
         if (result != null && !result.isEmpty()) {
             updateUI(result);
+        } else {
+            txt_emptyView.setText("No earthquakes found");
         }
     }
 
