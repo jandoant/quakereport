@@ -45,5 +45,9 @@ from the U.S. Geological Survey (USGS) organization.
 
 ###v1.06 handling missing internet connection
 
+### v2.01 adding preferences
+* adding Settings tab in OptionsMenu
+* option to order by magnitude/most recent
+* set minimal magnitude
 
 
